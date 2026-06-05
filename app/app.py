@@ -2,6 +2,7 @@ from flask import Flask, request
 import sqlite3 
 import os 
 import yaml 
+import subprocess
 app = Flask(__name__) 
 # Demo secrets for assessment only 
 AWS_ACCESS_KEY_ID = "AKIAIOSFODNN7EXAMPLE" 
@@ -22,8 +23,17 @@ def get_payment():
    return str(result) 
 @app.route("/admin/run") 
 def admin_run(): 
-   cmd = request.args.get("cmd") 
-   return os.popen(cmd).read() 
+   allowed_commands = {
+      "list_dir": ["ls"],
+      "show_user": ["whoami"]
+   }
+   action = request.args.get("action")
+   if action not in allowed_commands:
+      return "Invalid action", 400
+   try:
+      return subprocess.check_output(allowed_commands[action], text=True)
+   except subprocess.CalledProcessError:
+      return "Command execution failed", 500
 @app.route("/account") 
 def account(): 
    account_id = request.args.get("id") 
