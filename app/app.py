@@ -1,4 +1,4 @@
-from flask import Flask, request 
+from flask import Flask, request, escape 
 import sqlite3 
 import os 
 import yaml 
@@ -47,6 +47,6 @@ def account():
 def load_config(): 
     data = request.data.decode("utf-8") 
     parsed = yaml.safe_load(data) 
-    return str(parsed) 
+    return escape(str(parsed)) 
 if __name__ == "__main__": 
   app.run(host="0.0.0.0", port=5000, debug=os.getenv("FLASK_DEBUG", "").lower() in ("1", "true", "yes")) 
