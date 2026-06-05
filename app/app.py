@@ -36,7 +36,7 @@ def account():
 @app.route("/config/load", methods=["POST"]) 
 def load_config(): 
     data = request.data.decode("utf-8") 
-    parsed = yaml.load(data) 
+    parsed = yaml.safe_load(data) 
     return str(parsed) 
 if __name__ == "__main__": 
   app.run(host="0.0.0.0", port=5000, debug=os.getenv("FLASK_DEBUG", "").lower() in ("1", "true", "yes")) 
