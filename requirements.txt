@@ -1,4 +1,4 @@
 Flask==0.12 
 Jinja2==2.10 
 requests==2.19.1 
-PyYAML==5.1 
+PyYAML==5.4 
