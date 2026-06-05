@@ -39,4 +39,4 @@ def load_config():
     parsed = yaml.load(data) 
     return str(parsed) 
 if __name__ == "__main__": 
-  app.run(host="0.0.0.0", port=5000, debug=True) 
+  app.run(host="0.0.0.0", port=5000, debug=os.getenv("FLASK_DEBUG", "").lower() in ("1", "true", "yes")) 
